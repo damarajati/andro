@@ -1,12 +1,4 @@
 {
-    "phonegap-plugin-barcodescanner": {
-        "source": {
-            "type": "registry",
-            "id": "phonegap-plugin-barcodescanner"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
     "cordova-plugin-whitelist": {
         "source": {
             "type": "registry",
@@ -15,18 +7,11 @@
         "is_top_level": true,
         "variables": {}
     },
-    "org.apache.cordova.dialogs": {
+    "com.phonegap.plugins.barcodescanner": {
         "source": {
-            "type": "registry",
-            "id": "org.apache.cordova.dialogs"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "org.apache.cordova.inappbrowser": {
-        "source": {
-            "type": "registry",
-            "id": "org.apache.cordova.inappbrowser"
+            "type": "git",
+            "url": "https://github.com/jonathannaguin/BarcodeScanner.git",
+            "subdir": "."
         },
         "is_top_level": true,
         "variables": {}

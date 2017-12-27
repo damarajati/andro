@@ -1,111 +1,133 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta name="format-detection" content="telephone=no">
-        <meta name="msapplication-tap-highlight" content="no">
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
-        <title>QRCode Reader APP</title>
-    </head>
-    <body>
+<html lang="en">
+<head>
 
-        <div data-role="page" id="home">
-            <div data-role="header">
-                <h1>Home</h1>
-            </div>
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
 
-            <div data-role="main" class="ui-content">
-                <p>
-                    <a target="_blank" href="javascript:scan();" style="text-decoration: none"><button>Scan</button></a>
-                    <a target="_blank" href="#display" style="text-decoration: none"><button>Display Scanned Data</button></a>
-                </p>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>eQuest</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="assets/styles/app.css" rel="stylesheet">
+    <style type="text/css">
+.button {
+    margin: 10px auto;
+    display:block;
+    width: 100px;
+    height: 30px;
+    background: red;
+    color:white;
+    text-align: center;
+    line-height: 30px;
+    font-weight: bold;
+    border-radius: 10px;
+}
+
+#splash {
+    display: block;
+}
+
+#qr {
+    display: none;
+}
+    </style>
+
+</head>
+<!-- NAVBAR
+================================================== -->
+<body>
+    <div class="app" id="splash">
+    <h1>Apache Cordova</h1>
+    <div id="deviceready" class="blink">
+        <p class="event listening">Connecting to Device</p>
+        <p class="event received">Device is Ready</p>
+    </div>
+</div>
+<div class="app" id="qr">
+    <br/>
+    <h1>QR code</h1>
+    <div id="scan" class="button" >SCAN</div>
+    <div id="generate" class="button" >Generate</div>
+</div>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle masthead-toggle" data-recalc="false" data-toggle="offcanvas" data-target="#offcanvas" data-canvas=".canvas">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand pull-right" href="home.html">eQuest</a>
             </div>
         </div>
+    </nav>
+    <!-- //NAVBAR// -->
 
-        <div data-role="page" id="display">
-            <div data-role="header">
-                <a target="_blank" href="#home" class="ui-btn ui-icon-home ui-btn-icon-left">Home</a>
-                <h1>Display</h1>
+    <!-- SIDEBAR -->
+    <div class="canvas">
+        <nav id="offcanvas" class="navmenu navmenu-inverse navmenu-fixed-left navmenu-site offcanvas" role="navigation">
+            <div class="container">
+                <div id="navbar" class="navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="quests.html"><i class="fa fa-star"></i> Quests</a></li>
+                        <li><a href="profile.html"><i class="fa fa-user"></i> Profile</a></li>
+                        <li><a href="scan.html"><i class="fa fa-qrcode"></i> QR Reader</a></li>
+                        <li><a href="generate.html"><i class="fa fa-qrcode"></i> QR Generator</a></li>
+                        <li><a href="map.html"><i class="fa fa-street-view"></i> Map</a></li>
+                    </ul>
+                </div>
             </div>
+        </nav>
+    </div>
+    <!-- //SIDEBAR// -->
 
-            <div data-role="main" class="ui-content">
-                <table data-role="table" data-mode="column" id="allTable" class="ui-responsive table-stroke">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Value</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+    <!-- CONTENT -->
+    <div class="main-quest">
 
-        <script src="js/jQuery-2.1.4.min.js"></script>
-        <script src="js/jquery.mobile-1.4.5.min.js"></script>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script>
-            function scan()
-            {
-                cordova.plugins.barcodeScanner.scan(
-                    function (result) {
-                        if(!result.cancelled)
-                        {
-                            if(result.format == "QR_CODE")
-                            {
-                                navigator.notification.prompt("Please enter name of data",  function(input){
-                                    var name = input.input1;
-                                    var value = result.text;
+        <input type="text" id="email" style="height: 39px; margin-right: 2px;"/>
+        <div id="login" class="btn btn-primary" style="margin-top: -3px;">LOGIN</div>
+        <p class="lead">Please Login</p>
 
-                                    var data = localStorage.getItem("LocalData");
-                                    console.log(data);
-                                    data = JSON.parse(data);
-                                    data[data.length] = [name, value];
+    </div>
+    <!-- //CONTENT// -->
 
-                                    localStorage.setItem("LocalData", JSON.stringify(data));
 
-                                    alert("Done");
-                                });
-                            }
-                        }
-                    },
-                    function (error) {
-                        alert("Scanning failed: " + error);
-                    }
-               );
-            }
+<!-- FOOTER -->
+<footer>
 
-            $(document).on("pagebeforeshow", "#display", function() {
-                $("table#allTable tbody").empty();
+</footer>
+<!-- //FOOTER// -->
 
-                var data = localStorage.getItem("LocalData");
-                console.log(data);
-                data = JSON.parse(data);
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="bower_components/jasny-bootstrap/dist/js/jasny-bootstrap.min.js"></script>
 
-                var html = "";
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="js/login.js"></script>
+<script type="text/javascript">
+onDeviceReady: function() {
+    /// ...
+    document.getElementById("scan").addEventListener("click", scanQr, false);
+    document.getElementById("generate").addEventListener("click", generateQr, false);
+    document.getElementById("splash").style.display = 'none';
+        document.getElementById("qr").style.display = 'block';
+}
+</script>
 
-                for(var count = 0; count < data.length; count++)
-                {
-                    html = html + "<tr><td>" + data[count][0] + "</td><td><a href='javascript:openURL(\"" + data[count][1] + "\")'>" + data[count][1] + "</a></td></tr>";
-                }
-
-                $("table#allTable tbody").append(html).closest("table#allTable").table("refresh").trigger("create");
-
-            });
-
-            function openURL(url)
-            {
-                window.open(url, '_blank', 'location=yes');
-            }
-
-            //initialize
-            if(localStorage.getItem("LocalData") == null)
-            {
-                var data = [];
-                data = JSON.stringify(data);
-                localStorage.setItem("LocalData", data);
-            }
-        </script>
-    </body>
+</body>
 </html>
